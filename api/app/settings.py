@@ -16,7 +16,15 @@ class MysqlSettings(Base):
     MYSQL_DATABASE: str
 
 
-class Settings(MysqlSettings):
+class PostgresqlSettings(Base):
+    POSTGRESQL_HOST: str
+    POSTGRESQL_PORT: int
+    POSTGRESQL_USER: str
+    POSTGRESQL_PASSWORD: str
+    POSTGRESQL_DATABASE: str
+
+
+class Settings(MysqlSettings, PostgresqlSettings):
     pass
 
 

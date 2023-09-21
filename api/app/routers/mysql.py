@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from app.sqlalchemy_models.Todo import Todo
-from app.tools.engine_sqlalchemy import get_db
+from app.tools.engine_sqlalchemy import get_db_mysql
 from app.schemas.Todo import TodoUpdate, TodoCreate
 from app.schemas.Todo import Todo as TodoSchema
 
-from app.utils.sqlalchemy import get_todos, get_todo_by_id
-from app.utils.sqlalchemy import create_todo as create_todo_db
+from app.tools.sqlalchemy import get_todo_by_id
+from app.tools.sqlalchemy import create_todo as create_todo_db
+from app.tools.sqlalchemy import get_todos as get_tod
 
 import datetime
 
@@ -13,12 +14,12 @@ router = APIRouter(tags=["mysql"])
 
 
 @router.get("/")
-def get_todos(db=Depends(get_db)):
-    return get_todos(db)
+def get_todos(db=Depends(get_db_mysql)):
+    return get_todos_db(db)
 
 
 @router.get("/{todo_id}", response_model=TodoSchema)
-def get_todo(todo_id: int, db=Depends(get_db)):
+def get_todo(todo_id: int, db=Depends(get_db_mysql)):
     todo = get_todo_by_id(db, todo_id)
     if todo is None:
         raise HTTPException(
@@ -27,7 +28,7 @@ def get_todo(todo_id: int, db=Depends(get_db)):
 
 
 @router.delete("/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_todo(todo_id: int, db=Depends(get_db)):
+def delete_todo(todo_id: int, db=Depends(get_db_mysql)):
     todo = get_todo_by_id(db, todo_id)
     if todo is None:
         raise HTTPException(
@@ -37,7 +38,7 @@ def delete_todo(todo_id: int, db=Depends(get_db)):
 
 
 @router.patch("/{todo_id}", status_code=status.HTTP_202_ACCEPTED, response_model=TodoSchema)
-def update_todo(todo_id: int, todo: TodoUpdate, db=Depends(get_db)):
+def update_todo(todo_id: int, todo: TodoUpdate, db=Depends(get_db_mysql)):
     todo_db = get_todo_by_id(db, todo_id)
     if todo_db is None:
         raise HTTPException(
@@ -53,7 +54,7 @@ def update_todo(todo_id: int, todo: TodoUpdate, db=Depends(get_db)):
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=TodoSchema)
-def create_todo(todo: TodoCreate, db=Depends(get_db)):
+def create_todo(todo: TodoCreate, db=Depends(get_db_mysql)):
     todo_db = create_todo_db(db, todo.title, todo.finished)
     db.add(todo_db)
     db.commit()

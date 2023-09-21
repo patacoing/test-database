@@ -3,18 +3,31 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from app.settings import settings
 
-engine = create_engine(
+engine_mysql = create_engine(
     f"mysql+mysqlconnector://{settings.MYSQL_USER}:{settings.MYSQL_PASSWORD}@{settings.MYSQL_HOST}:{settings.MYSQL_PORT}/{settings.MYSQL_DATABASE}",
+    echo=False)
+
+engine_postgresql = create_engine(
+    f"postgresql+psycopg2://{settings.POSTGRESQL_USER}:{settings.POSTGRESQL_PASSWORD}@{settings.POSTGRESQL_HOST}:{settings.POSTGRESQL_PORT}/{settings.POSTGRESQL_DATABASE}",
     echo=False)
 
 
 Base = declarative_base()
-Session = sessionmaker(bind=engine)
+SessionMysql = sessionmaker(bind=engine_mysql)
+SessionPostgresql = sessionmaker(bind=engine_postgresql)
 
 
-def get_db():
+def get_db_mysql():
     try:
-        db = Session()
+        db = SessionMysql()
+        yield db
+    finally:
+        db.close()
+
+
+def get_db_postgresql():
+    try:
+        db = SessionPostgresql()
         yield db
     finally:
         db.close()
