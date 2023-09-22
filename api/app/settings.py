@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 class Base(BaseSettings):
     class Config:
-        env_file = ".env"
+        env_file = os.path.abspath(".env")
 
 
 class MysqlSettings(Base):
@@ -15,6 +15,12 @@ class MysqlSettings(Base):
     MYSQL_PASSWORD: str
     MYSQL_DATABASE: str
 
+    MYSQL_TEST_HOST: str
+    MYSQL_TEST_PORT: int
+    MYSQL_TEST_USER: str
+    MYSQL_TEST_PASSWORD: str
+    MYSQL_TEST_DATABASE: str
+
 
 class PostgresqlSettings(Base):
     POSTGRESQL_HOST: str
@@ -22,6 +28,12 @@ class PostgresqlSettings(Base):
     POSTGRESQL_USER: str
     POSTGRESQL_PASSWORD: str
     POSTGRESQL_DATABASE: str
+
+    POSTGRESQL_TEST_HOST: str
+    POSTGRESQL_TEST_PORT: int
+    POSTGRESQL_TEST_USER: str
+    POSTGRESQL_TEST_PASSWORD: str
+    POSTGRESQL_TEST_DATABASE: str
 
 
 class Settings(MysqlSettings, PostgresqlSettings):
