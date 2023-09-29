@@ -1,6 +1,12 @@
-
-
+version: '3.7'
 services:
+  api:
+    build:
+      context: ./api/
+    ports:
+      - 8000:8000
+    volumes:
+      - ./api:/app
   mysql-test:
     image: mysql:5.7
     restart: always
@@ -25,7 +31,7 @@ services:
       POSTGRES_PASSWORD: test
       POSTGRES_DB: test
       POSTGRES_ROOT_PASSWORD: test
-  redis:
+  redis-test:
     image: redis:latest
     command: redis-server
     volumes: 

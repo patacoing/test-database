@@ -24,16 +24,14 @@ def test_get_todo_not_found(ClientMysql):
 
 
 @pytest.mark.redis
-def test_get_todo_not_from_cache(ClientMysql, redis_client, test_mysql):
+def test_get_todo_not_from_cache(ClientMysql, test_mysql):
     todo = Todo(title="test")
     test_mysql.add(todo)
     test_mysql.commit()
 
-    print(test_mysql.query(Todo).all())
     response = ClientMysql.get("/redis/1")
-    print(response.json())
     assert response.status_code == status.HTTP_200_OK
-    assert response.json()["value"] == "test"
+    assert response.json()["title"] == "test"
 
 
 @pytest.mark.redis
@@ -42,8 +40,8 @@ def test_get_todo_from_cache(ClientMysql, redis_client, test_mysql):
     test_mysql.add(todo)
     test_mysql.commit()
 
-    redis_client.setKey("1", "test")
+    redis_client.setKey("1", "{'title': 'test'}")
 
     response = ClientMysql.get("/redis/1")
     assert response.status_code == status.HTTP_200_OK
-    assert response.json()["value"] == "test"
+    assert response.json()["title"] == "test"

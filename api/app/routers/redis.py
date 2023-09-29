@@ -30,7 +30,7 @@ async def set_redis_value(key: str, value: str, expiration: int = None, redis_cl
     return {"key": key, "value": value}
 
 
-@router.get("/todos/{todo_id}", status_code=status.HTTP_200_OK)
+@router.get("/{todo_id}", status_code=status.HTTP_200_OK)
 async def get_todo_by_id(todo_id: int, redis_client=Depends(get_redis_client), db=Depends(get_db_mysql)):
     value = redis_client.getValue(todo_id)
     if value is None:

@@ -1,4 +1,3 @@
-from app.routers.mysql import router
 import pytest
 from fastapi.testclient import TestClient
 from main import app
@@ -8,7 +7,7 @@ from app.sqlalchemy_models.Todo import Todo
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.tools.engine_sqlalchemy import Base, get_db_mysql, get_db_postgresql
-from app.tools.redis import redis_client as redis_client_db
+from app.tools.redis import Redis
 from app.tools.redis import get_redis_client
 
 
@@ -25,6 +24,11 @@ TestingSessionLocalMysql = sessionmaker(
 TestingSessionLocalPostgresql = sessionmaker(
     autocommit=False, autoflush=False, bind=engine_postgresql)
 
+redis_client_db = Redis(
+    host=settings.REDIS_TEST_HOST,
+    port=settings.REDIS_TEST_PORT,
+    decode_responses=True
+)
 
 def override_get_db_mysql():
     try:
@@ -40,6 +44,11 @@ def override_get_db_postgresql():
         yield db
     finally:
         db.close()
+
+
+def override_get_redis_client():
+    yield redis_client_db
+    redis_client_db.client.flushall()
 
 
 @pytest.fixture
@@ -86,8 +95,8 @@ def Client(redis_client):
 
 
 @pytest.fixture
-def ClientMysql(db_mysql, redis_client):
-    app.dependency_overrides[get_redis_client] = lambda: redis_client_db
+def ClientMysql(db_mysql):
+    app.dependency_overrides[get_redis_client] = override_get_redis_client
     app.dependency_overrides[get_db_mysql] = override_get_db_mysql
     return TestClient(app)
 

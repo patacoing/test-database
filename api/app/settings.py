@@ -1,7 +1,5 @@
 from pydantic_settings import BaseSettings
 import os
-from pydantic import BaseModel
-
 
 class Base(BaseSettings):
     class Config:
@@ -39,6 +37,9 @@ class PostgresqlSettings(Base):
 class RedisSettings(Base):
     REDIS_HOST: str
     REDIS_PORT: int
+
+    REDIS_TEST_HOST: str
+    REDIS_TEST_PORT: int
 
 
 class Settings(MysqlSettings, PostgresqlSettings, RedisSettings):
