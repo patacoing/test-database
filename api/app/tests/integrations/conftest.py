@@ -8,6 +8,9 @@ from app.sqlalchemy_models.Todo import Todo
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.tools.engine_sqlalchemy import Base, get_db_mysql, get_db_postgresql
+from app.tools.redis import redis_client as redis_client_db
+from app.tools.redis import get_redis_client
+
 
 engine_mysql = create_engine(
     f"mysql+mysqlconnector://{settings.MYSQL_TEST_USER}:{settings.MYSQL_TEST_PASSWORD}@{settings.MYSQL_TEST_HOST}:{settings.MYSQL_TEST_PORT}/{settings.MYSQL_TEST_DATABASE}",
@@ -72,7 +75,19 @@ def db_postgresql():
 
 
 @pytest.fixture
-def ClientMysql(db_mysql):
+def redis_client():
+    yield redis_client_db
+    redis_client_db.client.flushall()
+
+
+@pytest.fixture
+def Client(redis_client):
+    return TestClient(app)
+
+
+@pytest.fixture
+def ClientMysql(db_mysql, redis_client):
+    app.dependency_overrides[get_redis_client] = lambda: redis_client_db
     app.dependency_overrides[get_db_mysql] = override_get_db_mysql
     return TestClient(app)
 

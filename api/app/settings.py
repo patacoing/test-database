@@ -36,7 +36,12 @@ class PostgresqlSettings(Base):
     POSTGRESQL_TEST_DATABASE: str
 
 
-class Settings(MysqlSettings, PostgresqlSettings):
+class RedisSettings(Base):
+    REDIS_HOST: str
+    REDIS_PORT: int
+
+
+class Settings(MysqlSettings, PostgresqlSettings, RedisSettings):
     pass
 
 

@@ -11,3 +11,6 @@ class Todo(Base):
     finished: bool = Column(Boolean, default=False)
     created_at: DateTime = Column(DateTime, default=datetime.datetime.now)
     updated_at: DateTime = Column(DateTime, default=datetime.datetime.now)
+
+    def to_json(self):
+        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}

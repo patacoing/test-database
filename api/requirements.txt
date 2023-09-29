@@ -1,5 +1,6 @@
 annotated-types==0.5.0
 anyio==3.7.1
+async-timeout==4.0.3
 attrs==19.3.0
 Automat==0.8.0
 backcall==0.1.0
@@ -85,6 +86,7 @@ python-debian==0.1.36+ubuntu1.1
 python-dotenv==1.0.0
 pytz==2022.1
 PyYAML==5.3.1
+redis==5.0.0
 requests==2.22.0
 requests-unixsocket==0.2.0
 SecretStorage==2.3.1
