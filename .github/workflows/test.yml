@@ -1,11 +1,12 @@
 on: [push]
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v2
-    - name: Setup compose stack
-      run: |
-        docker-compose -f docker-compose.dev.yml up -d --build
-    - name: Run tests
-      run: |
-        docker-compose -f docker-compose.dev.yml exec api python -m pytest app/tests
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup compose stack
+        run: |
+          docker-compose -f docker-compose.dev.yml up -d --build
+      - name: Run tests
+        run: |
+          docker-compose -f docker-compose.dev.yml exec api python -m pytest app/tests
