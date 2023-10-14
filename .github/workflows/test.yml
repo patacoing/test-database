@@ -10,7 +10,7 @@ jobs:
       - name: Display
         run: |
           docker ps
-          docker exec -it api ls
+          docker exec api ls
       - name: Run tests
         run: |
-          docker exec -it api python -m pytest app/tests
+          docker exec api python -m pytest app/tests
