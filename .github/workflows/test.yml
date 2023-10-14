@@ -7,6 +7,9 @@ jobs:
       - name: Setup compose stack
         run: |
           docker-compose -f docker-compose.dev.yml up -d --build
+      - name: Display
+        run: |
+          docker ps
       - name: Run tests
         run: |
           docker exec -it api python -m pytest app/tests
