@@ -1,13 +1,19 @@
 version: '3.7'
 services:
   api:
+    container_name: api
     build:
       context: ./api/
     ports:
       - 8000:8000
     volumes:
       - ./api:/app
-  mysql-test:
+    depends_on:
+      - mysql
+      - postgresql
+      - redis
+  mysql:
+    container_name: mysql
     image: mysql:5.7
     restart: always
     ports:
@@ -19,7 +25,8 @@ services:
       MYSQL_DATABASE: test
       MYSQL_USER: test
       MYSQL_PASSWORD: test
-  postgresql-test:
+  postgresql:
+    container_name: postgresql
     image: postgres:9.6
     restart: always
     ports:
@@ -31,7 +38,8 @@ services:
       POSTGRES_PASSWORD: test
       POSTGRES_DB: test
       POSTGRES_ROOT_PASSWORD: test
-  redis-test:
+  redis:
+    container_name: redis
     image: redis:latest
     command: redis-server
     volumes: 
