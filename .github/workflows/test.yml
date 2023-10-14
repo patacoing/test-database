@@ -18,6 +18,7 @@ jobs:
           MYSQL_TEST_USER: test
           MYSQL_TEST_PASSWORD: test
           MYSQL_TEST_DATABASE: test
+
           REDIS_HOST: redis
           REDIS_PORT: 6379
           REDIS_TEST_HOST: redis
@@ -36,6 +37,9 @@ jobs:
         run: |
           docker ps
           docker exec api ls
+      - name: Display env var
+        run: |
+          docker exec api env
       - name: Run tests
         run: |
           docker exec api python -m pytest app/tests
