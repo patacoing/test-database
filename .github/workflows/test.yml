@@ -7,6 +7,31 @@ jobs:
       - name: Setup compose stack
         run: |
           docker-compose -f docker-compose.dev.yml up -d --build
+        env:
+          MYSQL_HOST: mysql
+          MYSQL_PORT: 3306
+          MYSQL_USER: test
+          MYSQL_PASSWORD: test
+          MYSQL_DATABASE: test
+          MYSQL_TEST_HOST: mysql
+          MYSQL_TEST_PORT: 3306
+          MYSQL_TEST_USER: test
+          MYSQL_TEST_PASSWORD: test
+          MYSQL_TEST_DATABASE: test
+          REDIS_HOST: redis
+          REDIS_PORT: 6379
+          REDIS_TEST_HOST: redis
+          REDIS_TEST_PORT: 6379
+          POSTGRES_HOST: postgresql
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DATABASE: test
+          POSTGRES_TEST_HOST: postgresql
+          POSTGRES_TEST_PORT: 5432
+          POSTGRES_TEST_USER: test
+          POSTGRES_TEST_PASSWORD: test
+          POSTGRES_TEST_DATABASE: test
       - name: Display
         run: |
           docker ps
