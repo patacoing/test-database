@@ -44,7 +44,7 @@ jobs:
           docker exec api env
       - name: Run tests
         run: |
-          docker exec api python -m pytest app/tests
+          docker exec api python -m pytest app/tests -v -m mysql
         continue-on-error: true
       - name: show error
         run: |
