@@ -47,3 +47,4 @@ jobs:
       - name: show error
         run: |
           docker logs api
+          docker logs mysql | tail
