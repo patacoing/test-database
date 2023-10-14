@@ -48,3 +48,4 @@ jobs:
         run: |
           docker logs api
           docker logs mysql | tail
+          docker exec api ping mysql
