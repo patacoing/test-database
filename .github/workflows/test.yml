@@ -14,3 +14,6 @@ jobs:
       - name: Run tests
         run: |
           docker exec api python -m pytest app/tests
+      - name: show error
+        run: |
+          docker logs api
