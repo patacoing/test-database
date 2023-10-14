@@ -4,6 +4,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Docker version
+        run: docker --version
       - name: Setup compose stack
         run: |
           docker-compose -f docker-compose.dev.yml up -d --build
@@ -48,4 +50,4 @@ jobs:
         run: |
           docker logs api
           docker logs mysql | tail
-          docker exec api ping mysql
+          docker exec api nc -zv mysql 3306
