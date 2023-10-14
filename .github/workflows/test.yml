@@ -22,16 +22,16 @@ jobs:
           REDIS_PORT: 6379
           REDIS_TEST_HOST: redis
           REDIS_TEST_PORT: 6379
-          POSTGRES_HOST: postgresql
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: test
-          POSTGRES_PASSWORD: test
-          POSTGRES_DATABASE: test
-          POSTGRES_TEST_HOST: postgresql
-          POSTGRES_TEST_PORT: 5432
-          POSTGRES_TEST_USER: test
-          POSTGRES_TEST_PASSWORD: test
-          POSTGRES_TEST_DATABASE: test
+          POSTGRESQL_HOST: postgresql
+          POSTGRESQL_PORT: 5432
+          POSTGRESQL_USER: test
+          POSTGRESQL_PASSWORD: test
+          POSTGRESQL_DATABASE: test
+          POSTGRESQL_TEST_HOST: postgresql
+          POSTGRESQL_TEST_PORT: 5432
+          POSTGRESQL_TEST_USER: test
+          POSTGRESQL_TEST_PASSWORD: test
+          POSTGRESQL_TEST_DATABASE: test
       - name: Display
         run: |
           docker ps
