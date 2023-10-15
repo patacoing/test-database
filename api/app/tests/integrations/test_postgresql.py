@@ -31,8 +31,7 @@ def test_create_todo(ClientPostgresql, test_postgresql):
     assert response.status_code == status.HTTP_201_CREATED
     assert response.json()["title"] == "test"
     id = response.json()["id"]
-    assert test_postgresql.query(Todo).filter(
-        Todo.id == id).first() is not None
+    assert test_postgresql.query(Todo).filter(Todo.id == id).first() is not None
 
 
 @pytest.mark.postgresql
@@ -48,8 +47,7 @@ def test_delete_todo(ClientPostgresql, test_postgresql):
     test_postgresql.commit()
     response = ClientPostgresql.delete(f"/postgresql/{todo.id}")
     assert response.status_code == status.HTTP_204_NO_CONTENT
-    assert test_postgresql.query(Todo).filter(
-        Todo.id == todo.id).first() is None
+    assert test_postgresql.query(Todo).filter(Todo.id == todo.id).first() is None
 
 
 @pytest.mark.postgresql
@@ -63,10 +61,10 @@ def test_update_todo(ClientPostgresql, test_postgresql):
     todo = Todo(title="test")
     test_postgresql.add(todo)
     test_postgresql.commit()
-    response = ClientPostgresql.patch(
-        f"/postgresql/{todo.id}", json={"title": "test2"})
+    response = ClientPostgresql.patch(f"/postgresql/{todo.id}", json={"title": "test2"})
     assert response.status_code == status.HTTP_202_ACCEPTED
     assert response.json()["title"] == "test2"
     test_postgresql.commit()
-    assert test_postgresql.query(Todo).filter(
-        Todo.id == todo.id).first().title == "test2"
+    assert (
+        test_postgresql.query(Todo).filter(Todo.id == todo.id).first().title == "test2"
+    )

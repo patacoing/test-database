@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings
 import os
 
+
 class Base(BaseSettings):
     class Config:
         env_file = os.path.abspath(".env")
