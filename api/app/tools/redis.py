@@ -6,7 +6,8 @@ from typing import Optional
 class Redis:
     def __init__(self, host, port, decode_responses):
         self.client = RedisClient(
-            host=host, port=port, decode_responses=decode_responses)
+            host=host, port=port, decode_responses=decode_responses
+        )
 
     def getValue(self, key):
         """
@@ -28,9 +29,7 @@ class Redis:
 
 
 redis_client = Redis(
-    host=settings.REDIS_HOST,
-    port=settings.REDIS_PORT,
-    decode_responses=True
+    host=settings.REDIS_HOST, port=settings.REDIS_PORT, decode_responses=True
 )
 
 

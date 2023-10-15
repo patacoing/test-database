@@ -23,7 +23,8 @@ def get_todo(todo_id: int, db=Depends(get_db_mysql)):
     todo = get_todo_by_id(db=db, id=todo_id)
     if todo is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Todo not found")
+            status_code=status.HTTP_404_NOT_FOUND, detail="Todo not found"
+        )
     return todo
 
 
@@ -32,17 +33,21 @@ def delete_todo(todo_id: int, db=Depends(get_db_mysql)):
     todo = get_todo_by_id(db=db, id=todo_id)
     if todo is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Todo not found")
+            status_code=status.HTTP_404_NOT_FOUND, detail="Todo not found"
+        )
     db.delete(todo)
     db.commit()
 
 
-@router.patch("/{todo_id}", status_code=status.HTTP_202_ACCEPTED, response_model=TodoSchema)
+@router.patch(
+    "/{todo_id}", status_code=status.HTTP_202_ACCEPTED, response_model=TodoSchema
+)
 def update_todo(todo_id: int, todo: TodoUpdate, db=Depends(get_db_mysql)):
     todo_db = get_todo_by_id(db=db, id=todo_id)
     if todo_db is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Todo not found")
+            status_code=status.HTTP_404_NOT_FOUND, detail="Todo not found"
+        )
     if todo.title is not None:
         todo_db.title = todo.title
     if todo.finished is not None:
