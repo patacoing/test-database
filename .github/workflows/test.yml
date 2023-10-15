@@ -4,26 +4,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Docker version
-        run: docker --version
       - name: Setup compose stack
         run: |
           docker-compose -f docker-compose.dev.yml up -d --build
       - name: Wait for build
         run: sleep 30
-      - name: Display
-        run: |
-          docker ps
-          docker exec api ls
-      - name: Display env var
-        run: |
-          docker exec api env
       - name: Run tests
         run: |
-          docker exec api python -m pytest app/tests -v -m mysql
-        continue-on-error: true
-      - name: show error
-        run: |
-          docker logs api
-          docker logs mysql | tail
-          docker exec api nc -zv mysql 3306
+          docker exec api python -m pytest app/tests
