@@ -23,6 +23,8 @@ jobs:
           pip install black
           black api/app/
           git add api/app/
+          git config --local user.email ${{ secrets.CI_EMAIL }}
+          git config --local user.name ${{ secrets.CI_USERNAME }}
           git commit -m "[UPDATE] code formatted with black"
           git push
       - name: Setup compose stack
