@@ -12,7 +12,4 @@ def get_todos(db: Session) -> List[Todo]:
 
 
 def create_todo(db: Session, title: str, finished: bool) -> Todo:
-    return Todo(
-        title=title,
-        finished=finished
-    )
+    return Todo(title=title, finished=finished)

@@ -4,11 +4,13 @@ from app.settings import settings
 
 engine_mysql = create_engine(
     f"mysql+mysqlconnector://{settings.MYSQL_USER}:{settings.MYSQL_PASSWORD}@{settings.MYSQL_HOST}:{settings.MYSQL_PORT}/{settings.MYSQL_DATABASE}",
-    echo=False)
+    echo=False,
+)
 
 engine_postgresql = create_engine(
     f"postgresql+psycopg2://{settings.POSTGRESQL_USER}:{settings.POSTGRESQL_PASSWORD}@{settings.POSTGRESQL_HOST}:{settings.POSTGRESQL_PORT}/{settings.POSTGRESQL_DATABASE}",
-    echo=False)
+    echo=False,
+)
 
 
 Base = declarative_base()

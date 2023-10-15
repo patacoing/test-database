@@ -10,6 +10,9 @@ from app.tools.engine_sqlalchemy import Base, get_db_mysql, get_db_postgresql
 from app.tools.redis import Redis
 from app.tools.redis import get_redis_client
 
+print(
+    f"mysql+mysqlconnector://{settings.MYSQL_TEST_USER}:{settings.MYSQL_TEST_PASSWORD}@{settings.MYSQL_TEST_HOST}:{settings.MYSQL_TEST_PORT}/{settings.MYSQL_TEST_DATABASE}"
+)
 
 engine_mysql = create_engine(
     f"mysql+mysqlconnector://{settings.MYSQL_TEST_USER}:{settings.MYSQL_TEST_PASSWORD}@{settings.MYSQL_TEST_HOST}:{settings.MYSQL_TEST_PORT}/{settings.MYSQL_TEST_DATABASE}",
@@ -20,15 +23,16 @@ engine_postgresql = create_engine(
     poolclass=StaticPool,
 )
 TestingSessionLocalMysql = sessionmaker(
-    autocommit=False, autoflush=False, bind=engine_mysql)
+    autocommit=False, autoflush=False, bind=engine_mysql
+)
 TestingSessionLocalPostgresql = sessionmaker(
-    autocommit=False, autoflush=False, bind=engine_postgresql)
+    autocommit=False, autoflush=False, bind=engine_postgresql
+)
 
 redis_client_db = Redis(
-    host=settings.REDIS_TEST_HOST,
-    port=settings.REDIS_TEST_PORT,
-    decode_responses=True
+    host=settings.REDIS_TEST_HOST, port=settings.REDIS_TEST_PORT, decode_responses=True
 )
+
 
 def override_get_db_mysql():
     try:

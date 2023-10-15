@@ -65,5 +65,4 @@ def test_update_todo(ClientMysql, test_mysql):
     assert response.status_code == status.HTTP_202_ACCEPTED
     assert response.json()["title"] == "test2"
     test_mysql.commit()
-    assert test_mysql.query(Todo).filter(
-        Todo.id == todo.id).first().title == "test2"
+    assert test_mysql.query(Todo).filter(Todo.id == todo.id).first().title == "test2"

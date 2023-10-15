@@ -12,6 +12,34 @@ services:
       - mysql
       - postgresql
       - redis
+    networks:
+      - api
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: test
+      MYSQL_TEST_HOST: mysql
+      MYSQL_TEST_PORT: 3306
+      MYSQL_TEST_USER: test
+      MYSQL_TEST_PASSWORD: test
+      MYSQL_TEST_DATABASE: test
+
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_TEST_HOST: redis
+      REDIS_TEST_PORT: 6379
+      POSTGRESQL_HOST: postgresql
+      POSTGRESQL_PORT: 5432
+      POSTGRESQL_USER: test
+      POSTGRESQL_PASSWORD: test
+      POSTGRESQL_DATABASE: test
+      POSTGRESQL_TEST_HOST: postgresql
+      POSTGRESQL_TEST_PORT: 5432
+      POSTGRESQL_TEST_USER: test
+      POSTGRESQL_TEST_PASSWORD: test
+      POSTGRESQL_TEST_DATABASE: test
   mysql:
     container_name: mysql
     image: mysql:5.7
@@ -25,6 +53,8 @@ services:
       MYSQL_DATABASE: test
       MYSQL_USER: test
       MYSQL_PASSWORD: test
+    networks:
+      - api
   postgresql:
     container_name: postgresql
     image: postgres:9.6
@@ -38,6 +68,8 @@ services:
       POSTGRES_PASSWORD: test
       POSTGRES_DB: test
       POSTGRES_ROOT_PASSWORD: test
+    networks:
+      - api
   redis:
     container_name: redis
     image: redis:latest
@@ -46,9 +78,14 @@ services:
       - redis:/data
     ports:
       - 6379:6379
+    networks:
+      - api
 
 volumes:
   mysql:
   postgresql:
   redis:
     driver: local
+
+networks:
+  api:
