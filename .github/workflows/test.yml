@@ -24,7 +24,7 @@ jobs:
           git config --local user.email ${{ secrets.CI_EMAIL }}
           git config --local user.name ${{ secrets.CI_USERNAME }}
           git commit -m "[UPDATE] code formatted with black"
-          git push
+          git push || true
         continue-on-error: true
   tests:
     runs-on: ubuntu-latest
