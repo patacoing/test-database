@@ -27,6 +27,7 @@ jobs:
             git config --local user.email "romain.lefebvre1104@gmail.com"
             git config --local user.name "Romain Lefebvre"
             git commit -m "[UPDATE] code formatted with black"
+            git push
           fi
       - name: Setup compose stack
         run: |
