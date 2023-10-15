@@ -21,14 +21,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install black
-          if [ black --check api/app/ ]; then
-            black api/app/
-            git add api/app/
-            git config --local user.email "romain.lefebvre1104@gmail.com"
-            git config --local user.name "Romain Lefebvre"
-            git commit -m "[UPDATE] code formatted with black"
-            git push
-          fi
+          black api/app/
+          git add api/app/
+          git config --local user.email "romain.lefebvre1104@gmail.com"
+          git config --local user.name "Romain Lefebvre"
+          git commit -m "[UPDATE] code formatted with black"
+          git push
       - name: Setup compose stack
         run: |
           docker-compose -f docker-compose.dev.yml up -d --build
