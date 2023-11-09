@@ -10,9 +10,6 @@ from app.tools.engine_sqlalchemy import Base, get_db_mysql, get_db_postgresql
 from app.tools.redis import Redis
 from app.tools.redis import get_redis_client
 
-print(
-    f"mysql+mysqlconnector://{settings.MYSQL_TEST_USER}:{settings.MYSQL_TEST_PASSWORD}@{settings.MYSQL_TEST_HOST}:{settings.MYSQL_TEST_PORT}/{settings.MYSQL_TEST_DATABASE}"
-)
 
 engine_mysql = create_engine(
     f"mysql+mysqlconnector://{settings.MYSQL_TEST_USER}:{settings.MYSQL_TEST_PASSWORD}@{settings.MYSQL_TEST_HOST}:{settings.MYSQL_TEST_PORT}/{settings.MYSQL_TEST_DATABASE}",
